@@ -1,5 +1,5 @@
 import { Button } from "@chakra-ui/button";
-import { FormControl, FormLabel, VStack, Input, InputGroup, InputRightElement, Select } from "@chakra-ui/react";
+import { Input, Select } from "@chakra-ui/react";
 import { React, useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
@@ -45,10 +45,10 @@ const Signup = () => {
     if (pics.type === "image/jpeg" || pics.type === "image/png") {
       const data = new FormData();
       data.append("file", pics);
-      data.append("upload_preset", "wzeukzpi");
-      data.append("cloud_name", "dqdpwdoxs");
+      data.append("upload_preset", process.env.REACT_APP_UPLOAD_PRESET);
+      data.append("cloud_name", process.env.REACT_APP_CLOUD_NAME);
 
-      axios.post("https://api.cloudinary.com/v1_1/dqdpwdoxs/image/upload", data)
+      axios.post(`https://api.cloudinary.com/v1_1/${process.env.REACT_APP_CLOUD_NAME}/image/upload`, data)
         .then((response) => {
           setPic(response.data.url.toString());
           setPicLoading(false);

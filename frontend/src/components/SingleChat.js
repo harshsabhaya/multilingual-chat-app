@@ -85,7 +85,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         });
         console.log("response data", response);
         const Convertdata = response?.data?.translations[0]?.text;
-        if (Convertdata && Convertdata != newtextchangemessage) {
+        if (Convertdata && Convertdata !== newtextchangemessage) {
           newtextchangemessage = `${newMessage}  ( ${Convertdata} )`;
           setNewMessage(newtextchangemessage);
         }

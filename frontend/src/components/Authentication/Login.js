@@ -1,19 +1,17 @@
-import { Button } from "@chakra-ui/button";
-import { FormControl, FormLabel } from "@chakra-ui/form-control";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
-import { VStack } from "@chakra-ui/layout";
-import { useState, useEffect } from "react";
-import axios from "axios";
-import { useToast } from "@chakra-ui/react";
-import { useHistory } from "react-router-dom";
-import { ChatState } from "../../Context/ChatProvider";
+import { Button } from '@chakra-ui/button';
+import { Input } from '@chakra-ui/input';
+import { useToast } from '@chakra-ui/react';
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { ChatState } from '../../Context/ChatProvider';
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const handleClick = () => setShowPassword(!showPassword);
   const toast = useToast();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const { setUser } = ChatState();
 
@@ -29,8 +27,10 @@ const Login = () => {
   }, []);
 
   const handleSignInClick = () => {
-    const signInContainer = document.getElementsByClassName('sign-in-container');
-    const signUpContainer = document.getElementsByClassName('sign-up-container');
+    const signInContainer =
+      document.getElementsByClassName('sign-in-container');
+    const signUpContainer =
+      document.getElementsByClassName('sign-up-container');
     if (signInContainer && signUpContainer) {
       signInContainer[0].style.display = 'none';
       signUpContainer[0].style.display = 'block';
@@ -41,11 +41,11 @@ const Login = () => {
     setLoading(true);
     if (!email || !password) {
       toast({
-        title: "Please fill in all fields.",
-        status: "warning",
+        title: 'Please fill in all fields.',
+        status: 'warning',
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: 'bottom',
       });
       setLoading(false);
       return;
@@ -54,63 +54,63 @@ const Login = () => {
     try {
       const config = {
         headers: {
-          "Content-type": "application/json",
+          'Content-type': 'application/json',
         },
       };
 
       const { data } = await axios.post(
-        "/api/user/login",
+        '/api/user/login',
         { email, password },
         config
       );
 
       toast({
-        title: "Login Successful",
-        status: "success",
+        title: 'Login Successful',
+        status: 'success',
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: 'bottom',
       });
       setUser(data);
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      localStorage.setItem('userInfo', JSON.stringify(data));
       setLoading(false);
-      history.push("/chats");
+      history.push('/chats');
     } catch (error) {
       toast({
-        title: "Error Occurred!",
+        title: 'Error Occurred!',
         description: error.response.data.message,
-        status: "error",
+        status: 'error',
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: 'bottom',
       });
       setLoading(false);
     }
   };
 
   return (
-    <div className="data-form">
+    <div className='data-form'>
       <h1>Sign in</h1>
       <span>or use your account</span>
       <Input
         value={email}
-        placeholder="Enter your Email ID"
+        placeholder='Enter your Email ID'
         onChange={(e) => setEmail(e.target.value)}
-        borderColor="gray.400"
-        _focus={{ borderColor: "blue.400" }}
+        borderColor='gray.400'
+        _focus={{ borderColor: 'blue.400' }}
       />
       <Input
         value={password}
-        placeholder="Enter your Password"
-        type={showPassword ? "text" : "password"}
+        placeholder='Enter your Password'
+        type={showPassword ? 'text' : 'password'}
         onChange={(e) => setPassword(e.target.value)}
-        borderColor="gray.400"
-        _focus={{ borderColor: "blue.400" }}
+        borderColor='gray.400'
+        _focus={{ borderColor: 'blue.400' }}
       />
       <Button onClick={submitHandler} isLoading={loading}>
         Sign In
       </Button>
-      <Button className="create-account" onClick={handleSignInClick}>
+      <Button className='create-account' onClick={handleSignInClick}>
         Create Account
       </Button>
     </div>
